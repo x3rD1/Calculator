@@ -1,16 +1,16 @@
-let input1 = [];
-let firstNum;
-let sign;
-
-
-
 const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.screen');
+
+let input1 = [];
+let input2 = [];
+let firstNum;
+let sign;
+let num;
 
 buttons.forEach(button => {
     button.addEventListener('click', ()=>{
         if (button.textContent === "="){
-            display.textContent = operate(sign,firstNum,+input1);
+            display.textContent = operate(sign,firstNum,num);
        }else if (Number.isFinite(+button.textContent)){
             populate(button)
        }else{
@@ -20,15 +20,15 @@ buttons.forEach(button => {
 })
 
 function operator(button){
-    firstNum = +input1.join('');
+    firstNum = +input1.join('').slice(0,8);
     sign = button.textContent;
     display.textContent = input1.length = 0;
 }
 
 function populate(button){
-    let temp = display.textContent = button.textContent;
-       input1.push(temp);
-       return display.textContent = input1.join('');
+    input1.push(button.textContent);
+    num = +input1.join('').slice(0,8);   
+    return display.textContent = num;
 }
 
 function operate(operator,a,b){
