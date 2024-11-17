@@ -1,35 +1,45 @@
 const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.screen');
 
-let sign;
-let num;
+let c = 1;
+let result;
+let numbers = {
+    num1: "",
+    num2: "",
+}
 
 buttons.forEach(button => {
-    button.addEventListener('click', ()=>{
-        if (button.textContent === "="){
-            display.textContent = operate(sign,+num,+display.textContent);
-       }else if (Number.isFinite(+button.textContent)){
-            populate(button)
-       }else{
-            operator(button);
-       }
-    })
+    if (Number.isInteger(+button.textContent)){
+        display.textContent = "";
+        button.addEventListener("click", () =>{
+            populate(button);
+            numbers[`num${c}`] += button.textContent;
+        })
+    }else if (button.textContent === "="){
+        button.addEventListener("click", () =>{
+            result = operate(sign,+numbers.num1,+numbers.num2);
+            display.textContent = result;
+        })
+    }else{
+        button.addEventListener("click", () =>{
+            operator(button)
+        });
+    }
 })
 
 function operator(button){
-    num = display.textContent;
+    if (numbers.num2 === ""){
+        c = 2;
+    }else {
+        numbers.num1 = operate(sign,+numbers.num1,+numbers.num2);
+        numbers.num2 = "";
+    }
     sign = button.textContent;
-    display.textContent = 0;
+    display.textContent ="";
 }
 
 function populate(button){
-    if (display.textContent != '0'){
-        display.textContent += button.textContent    
-    }else {
-        display.textContent = "";
-        display.textContent = button.textContent;
-    }
-    
+    display.textContent += button.textContent;
 }
 
 function operate(operator,a,b){
