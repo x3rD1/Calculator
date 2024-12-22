@@ -1,7 +1,9 @@
 const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.screen');
 
+let sign;
 let c = 1;
+let counter = 1;
 let result;
 let numbers = {
     num1: "",
@@ -12,8 +14,19 @@ buttons.forEach(button => {
     if (Number.isInteger(+button.textContent)){
         display.textContent = "";
         button.addEventListener("click", () =>{
-            populate(button);
+            if (counter != 2){
+                numbers[`num${c}`] += button.textContent;
+                populate(button)
+        }else if (counter === 2){
+            if (result === numbers.num1){
+                display.textContent = "";
+                result = 0;
+            }
             numbers[`num${c}`] += button.textContent;
+            populate(button)
+        }
+        //populate(button); //1
+        //display.textContent = "";
         })
     }else if (button.textContent === "="){
         button.addEventListener("click", () =>{
@@ -29,13 +42,17 @@ buttons.forEach(button => {
 
 function operator(button){
     if (numbers.num2 === ""){
+        display.textContent = "";
         c = 2;
+        counter = 2;
     }else {
         numbers.num1 = operate(sign,+numbers.num1,+numbers.num2);
         numbers.num2 = "";
+        display.textContent = numbers.num1;
+        result = numbers.num1;
     }
     sign = button.textContent;
-    display.textContent ="";
+    //display.textContent ="";
 }
 
 function populate(button){
