@@ -17,21 +17,28 @@ buttons.forEach(button => {
             if (counter != 2){
                 numbers[`num${c}`] += button.textContent;
                 populate(button)
-        }else if (counter === 2){
-            if (result === numbers.num1){
-                display.textContent = "";
-                result = 0;
+            }else if (counter === 2){
+                if (result === numbers.num1){
+                    display.textContent = "";
+                    result = 0;
             }
             numbers[`num${c}`] += button.textContent;
             populate(button)
-        }
-        //populate(button); //1
-        //display.textContent = "";
+            }
         })
     }else if (button.textContent === "="){
         button.addEventListener("click", () =>{
             result = operate(sign,+numbers.num1,+numbers.num2);
             display.textContent = result;
+        })
+    }else if (button.textContent === "AC" || button.textContent === "C"){
+        button.addEventListener("click", () =>{
+            display.textContent = 0;
+            c = 1;
+            counter = 1;
+            sign = "";
+            numbers.num1 = "";
+            numbers.num2 = "";
         })
     }else{
         button.addEventListener("click", () =>{
